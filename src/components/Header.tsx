@@ -16,7 +16,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-brown shadow-md">
+    <header className="sticky top-0 z-50 bg-brand-brown bg-[url('/images/footer_bg.webp')] bg-[length:auto_100%] bg-center bg-repeat-x [background-blend-mode:multiply] shadow-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#" className="font-serif text-2xl font-bold text-brand-cream">
           和東佛具店
