@@ -16,7 +16,7 @@ export default function Header() {
   };
 
   return (
-    <header className="relative sticky top-0 z-50 bg-brand-brown shadow-md before:absolute before:inset-0 before:content-[''] before:bg-[url('/images/footer_bg.webp')] before:bg-[length:auto_100%] before:bg-center before:bg-repeat-x before:opacity-20">
+    <header className="sticky top-0 z-50 bg-brand-brown shadow-md before:absolute before:inset-0 before:content-[''] before:bg-[url('/images/footer_bg.webp')] before:bg-[length:auto_100%] before:bg-center before:bg-repeat-x before:opacity-20">
       <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a href="#" className="font-serif text-2xl font-bold text-brand-cream">
           和東佛具店

@@ -62,6 +62,7 @@ export default function Portfolio() {
             <button
               key={item.src}
               onClick={() => setLightboxItem(item)}
+              aria-label={`查看作品：${item.title}`}
               className="group overflow-hidden rounded-xl text-left"
             >
               <div className="relative aspect-[4/3]">
