@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Banner() {
   return (
-    <section className="relative aspect-[16/7] w-full overflow-hidden">
+    <section className="relative aspect-[4/3] w-full overflow-hidden md:aspect-[16/7]">
       <div className="absolute inset-0 animate-[ken-burns_20s_ease-in-out_infinite_alternate]">
         <Image
           src="/images/banner.webp"

@@ -25,7 +25,7 @@ const works: WorkItem[] = [
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState("全部");
-  const [lightboxItem, setLightboxItem] = useState<WorkItem | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filtered =
     activeCategory === "全部"
@@ -61,7 +61,7 @@ export default function Portfolio() {
           {filtered.map((item) => (
             <button
               key={item.src}
-              onClick={() => setLightboxItem(item)}
+              onClick={() => setLightboxIndex(filtered.indexOf(item))}
               aria-label={`查看作品：${item.title}`}
               className="group overflow-hidden rounded-xl text-left"
             >
@@ -82,12 +82,11 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {lightboxItem && (
+      {lightboxIndex !== null && (
         <Lightbox
-          src={lightboxItem.src}
-          alt={`${lightboxItem.title} — 和東佛具店`}
-          title={lightboxItem.title}
-          onClose={() => setLightboxItem(null)}
+          items={filtered}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
         />
       )}
     </section>

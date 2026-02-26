@@ -1,19 +1,36 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
+
+interface LightboxItem {
+  src: string;
+  title: string;
+}
 
 interface LightboxProps {
-  src: string;
-  alt: string;
-  title: string;
+  items: LightboxItem[];
+  initialIndex: number;
   onClose: () => void;
 }
 
-export default function Lightbox({ src, alt, title, onClose }: LightboxProps) {
+export default function Lightbox({ items, initialIndex, onClose }: LightboxProps) {
+  const [index, setIndex] = useState(initialIndex);
+  const item = items[index];
+
+  const goPrev = useCallback(() => {
+    setIndex((i) => (i - 1 + items.length) % items.length);
+  }, [items.length]);
+
+  const goNext = useCallback(() => {
+    setIndex((i) => (i + 1) % items.length);
+  }, [items.length]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
     };
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
@@ -21,13 +38,13 @@ export default function Lightbox({ src, alt, title, onClose }: LightboxProps) {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [onClose]);
+  }, [onClose, goPrev, goNext]);
 
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={title}
+      aria-label={item.title}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
       onClick={onClose}
     >
@@ -42,16 +59,40 @@ export default function Lightbox({ src, alt, title, onClose }: LightboxProps) {
         >
           ✕
         </button>
+
+        {/* Prev */}
+        <button
+          onClick={goPrev}
+          className="absolute left-0 top-1/2 z-10 -translate-x-12 -translate-y-1/2 text-4xl text-white/70 transition-colors hover:text-white"
+          aria-label="上一張"
+        >
+          ‹
+        </button>
+
+        {/* Next */}
+        <button
+          onClick={goNext}
+          className="absolute right-0 top-1/2 z-10 translate-x-12 -translate-y-1/2 text-4xl text-white/70 transition-colors hover:text-white"
+          aria-label="下一張"
+        >
+          ›
+        </button>
+
         <div className="relative aspect-[4/3] w-[90vw] max-w-4xl">
           <Image
-            src={src}
-            alt={alt}
+            src={item.src}
+            alt={`${item.title} — 和東佛具店`}
             fill
             className="rounded-lg object-contain"
             sizes="90vw"
           />
         </div>
-        <p className="mt-3 text-center text-lg text-white">{title}</p>
+        <p className="mt-3 text-center text-lg text-white">
+          {item.title}
+          <span className="ml-2 text-sm text-white/60">
+            {index + 1} / {items.length}
+          </span>
+        </p>
       </div>
     </div>
   );

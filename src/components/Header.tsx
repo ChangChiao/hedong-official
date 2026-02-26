@@ -56,21 +56,26 @@ export default function Header() {
       </nav>
 
       {/* Mobile menu */}
-      {isOpen && (
-        <ul className="border-t border-brand-cream/20 bg-brand-brown px-6 pb-4 md:hidden">
+      <ul
+        className={`grid border-t border-brand-cream/20 bg-brand-brown px-6 transition-[grid-template-rows,opacity] duration-300 md:hidden ${
+          isOpen ? "grid-rows-[1fr] opacity-100 pb-4" : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
                 onClick={handleNavClick}
+                tabIndex={isOpen ? 0 : -1}
                 className="block py-3 text-brand-cream/90 transition-colors hover:text-white"
               >
                 {link.label}
               </a>
             </li>
           ))}
-        </ul>
-      )}
+        </div>
+      </ul>
     </header>
   );
 }
